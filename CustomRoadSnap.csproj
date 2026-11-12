@@ -15,8 +15,13 @@
 	</PropertyGroup>
 
 	<!--Imports must be after PropertyGroup block-->
-	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.props" />
-	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.targets" />
+	<PropertyGroup>
+		<CSIIToolPath>$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))</CSIIToolPath>
+		<!--Linux: no user-scope variables, fall back to the process environment-->
+		<CSIIToolPath Condition="'$(CSIIToolPath)' == ''">$(CSII_TOOLPATH)</CSIIToolPath>
+	</PropertyGroup>
+	<Import Project="$(CSIIToolPath)\Mod.props" />
+	<Import Project="$(CSIIToolPath)\Mod.targets" />
 
 	<!--RunModPostProcessor im Debug-Build überspringen – muss NACH den Imports stehen, damit er den Import-Target korrekt überschreibt-->
 	<Target Name="RunModPostProcessor" AfterTargets="AfterBuild" Condition="'$(NeedBuild)' and '$(Configuration)' == 'Debug'">
@@ -110,9 +115,13 @@
 			<!-- Exclude 0Harmony from Burst/ILPP references to avoid Burst hashing crash -->
 			<ReferencePathForPostProcessor Include="@(ReferencePath)" Condition="!$([System.String]::Copy('%(Filename)').StartsWith('0Harmony'))" />
 		</ItemGroup>
-		<PropertyGroup>
+		<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
 			<!-- Use dotnet exec to avoid modifying Steam runtimeconfig files -->
 			<ModPostProcessorArgs>dotnet exec --roll-forward Major "$(ModPostProcessorFullPath.Replace('.exe','.dll'))" PostProcess "$(TargetPath)" -u "$(UnityModProjectFullPath)" @(ReferencePathForPostProcessor->'-r "%(Identity)"', ' ') -p Windows -d -v</ModPostProcessorArgs>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+			<!-- Linux: run through the Proton wrapper script (CSII_MODPOSTPROCESSORPATH) -->
+			<ModPostProcessorArgs>"$(ModPostProcessorFullPath)" PostProcess "$(TargetPath)" -u "$(UnityModProjectFullPath)" @(ReferencePathForPostProcessor->'-r "%(Identity)"', ' ') -p Windows -d -v</ModPostProcessorArgs>
 		</PropertyGroup>
 	</Target>
 
