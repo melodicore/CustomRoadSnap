@@ -1,7 +1,7 @@
 # Custom Road Snap Fork — Cities: Skylines II Mod
 
 ![Version](https://img.shields.io/badge/release-not%20yet%20released-lightgrey)
-![Game Version](https://img.shields.io/badge/game%20version-1.5.*-green)
+![Game Version](https://img.shields.io/badge/game%20version-1.6.*-green)
 
 > **This is a fork.** Custom Road Snap Fork is based on
 > [CustomRoadSnap](https://github.com/Rias1944/CustomRoadSnap) by **Rias**
