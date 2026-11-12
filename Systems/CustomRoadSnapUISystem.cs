@@ -4,6 +4,7 @@ using Colossal.UI.Binding;
 using Game;
 using Game.SceneFlow;
 using Game.UI;
+using UnityEngine;
 
 namespace CustomRoadSnap
 {
@@ -13,7 +14,14 @@ namespace CustomRoadSnap
     /// </summary>
     public partial class CustomRoadSnapUISystem : UISystemBase
     {
-        private ValueBinding<bool> m_SnapEnabledBinding;
+        // Settings are written to disk this long after the last slider change,
+        // so dragging does not save on every tick (and gamepad input, which has no drag end, is saved too).
+        private const float kSaveDelaySeconds = 0.75f;
+
+        private ValueBinding<bool>  m_SnapEnabledBinding;
+        private ValueBinding<float> m_SnapAngleBinding;
+        private bool  m_AngleDirty;
+        private float m_AngleChangedAt;
 
         protected override void OnCreate()
         {
@@ -29,6 +37,20 @@ namespace CustomRoadSnap
             AddBinding(m_SnapEnabledBinding = new ValueBinding<bool>(
                 "customRoadSnap", "snapEnabled",
                 Mod.m_Setting?.SnapEnabled ?? false));
+
+            AddBinding(m_SnapAngleBinding = new ValueBinding<float>(
+                "customRoadSnap", "snapAngle",
+                Mod.m_Setting?.SnapAngle ?? 30f));
+
+            AddBinding(new TriggerBinding<float>(
+                "customRoadSnap", "setSnapAngle",
+                angle =>
+                {
+                    if (Mod.m_Setting == null) return;
+                    Mod.m_Setting.SnapAngle = Mathf.Clamp(Mathf.Round(angle), 1f, 90f);
+                    m_AngleDirty     = true;
+                    m_AngleChangedAt = UnityEngine.Time.realtimeSinceStartup;
+                }));
 
             AddBinding(new TriggerBinding(
                 "customRoadSnap", "toggleSnap",
@@ -51,6 +73,13 @@ namespace CustomRoadSnap
         protected override void OnUpdate()
         {
             m_SnapEnabledBinding.Update(Mod.m_Setting?.SnapEnabled ?? false);
+            m_SnapAngleBinding.Update(Mod.m_Setting?.SnapAngle ?? 30f);
+
+            if (m_AngleDirty && UnityEngine.Time.realtimeSinceStartup - m_AngleChangedAt >= kSaveDelaySeconds)
+            {
+                m_AngleDirty = false;
+                Mod.m_Setting?.ApplyAndSave();
+            }
         }
     }
 }

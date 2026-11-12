@@ -22,7 +22,7 @@ potential save corruption or unexpected behavior.
 ## Todo-List
 
 - [ ] Add Localization
-- [ ] Add UI slider next to the Button in the Road tools to quickly edit angles
+- [x] Add UI slider next to the Button in the Road tools to quickly edit angles
 
 ## 📦 Installation
 
