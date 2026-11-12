@@ -6,7 +6,7 @@ using Game.SceneFlow;
 using Game.UI;
 using UnityEngine;
 
-namespace CustomRoadSnap
+namespace CustomRoadSnapFork
 {
     /// <summary>
     /// Stellt der UI einen ValueBinding für den Snap-Zustand und einen TriggerBinding
@@ -35,15 +35,15 @@ namespace CustomRoadSnap
             }
 
             AddBinding(m_SnapEnabledBinding = new ValueBinding<bool>(
-                "customRoadSnap", "snapEnabled",
+                "customRoadSnapFork", "snapEnabled",
                 Mod.m_Setting?.SnapEnabled ?? false));
 
             AddBinding(m_SnapAngleBinding = new ValueBinding<float>(
-                "customRoadSnap", "snapAngle",
+                "customRoadSnapFork", "snapAngle",
                 Mod.m_Setting?.SnapAngle ?? 30f));
 
             AddBinding(new TriggerBinding<float>(
-                "customRoadSnap", "setSnapAngle",
+                "customRoadSnapFork", "setSnapAngle",
                 angle =>
                 {
                     if (Mod.m_Setting == null) return;
@@ -53,7 +53,7 @@ namespace CustomRoadSnap
                 }));
 
             AddBinding(new TriggerBinding(
-                "customRoadSnap", "toggleSnap",
+                "customRoadSnapFork", "toggleSnap",
                 () =>
                 {
                     if (Mod.m_Setting == null) return;

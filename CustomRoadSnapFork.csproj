@@ -134,7 +134,7 @@
 	</Target>
 
 	<!-- Deploy UI-Dateien direkt in ui/ (ohne dist-Unterordner) -->
-	<Target Name="DeployUI" AfterTargets="DeployWIP" Condition="'$(NeedBuild)' and Exists('$(MSBuildProjectDirectory)\ui\dist\CustomRoadSnap.mjs')">
+	<Target Name="DeployUI" AfterTargets="DeployWIP" Condition="'$(NeedBuild)' and Exists('$(MSBuildProjectDirectory)\ui\dist\CustomRoadSnapFork.mjs')">
 		<ItemGroup>
 			<UIFiles Include="$(MSBuildProjectDirectory)\ui\dist\**\*.*" />
 			<UIModJson Include="$(MSBuildProjectDirectory)\ui\mod.json" />

@@ -2,7 +2,7 @@ using Game.Tools;
 using HarmonyLib;
 using Unity.Mathematics;
 
-namespace CustomRoadSnap
+namespace CustomRoadSnapFork
 {
     // -------------------------------------------------------------------------
     // Harmony patch on NetToolSystem.GetRaycastResult(out ControlPoint, out bool)

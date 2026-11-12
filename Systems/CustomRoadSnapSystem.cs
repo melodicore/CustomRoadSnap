@@ -6,7 +6,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 
-namespace CustomRoadSnap
+namespace CustomRoadSnapFork
 {
     // -------------------------------------------------------------------------
     // Shared constants  –  axes are computed dynamically from the SnapAngle setting

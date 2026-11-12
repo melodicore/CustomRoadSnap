@@ -8,8 +8,8 @@ import { VanillaComponentResolver } from "mods/VanillaComponentResolver";
 const MIN_ANGLE = 1;
 const MAX_ANGLE = 90;
 
-const snapEnabled$ = bindValue<boolean>("customRoadSnap", "snapEnabled", false);
-const snapAngle$ = bindValue<number>("customRoadSnap", "snapAngle", 30);
+const snapEnabled$ = bindValue<boolean>("customRoadSnapFork", "snapEnabled", false);
+const snapAngle$ = bindValue<number>("customRoadSnapFork", "snapAngle", 30);
 
 export const RoadSnapSection: ModuleRegistryExtend = (Component: any) => {
     return (props: any) => {
@@ -30,17 +30,17 @@ export const RoadSnapSection: ModuleRegistryExtend = (Component: any) => {
             const { Section, ToolButton, Slider, DescriptionTooltip } = VanillaComponentResolver.instance;
             const theme = VanillaComponentResolver.instance.mouseToolOptionsTheme;
 
-            const sectionTitle = translate("ToolOptions.SECTION[CustomRoadSnap.SnapSection]", "Custom Snap");
-            const buttonTooltip = translate("ToolOptions.TOOLTIP_DESCRIPTION[CustomRoadSnap.ToggleSnap]", "Straßen-Einrasten ein-/ausschalten");
-            const sliderTitle = translate("ToolOptions.TOOLTIP_TITLE[CustomRoadSnap.SnapAngle]", "Snap angle");
+            const sectionTitle = translate("ToolOptions.SECTION[CustomRoadSnapFork.SnapSection]", "Custom Snap");
+            const buttonTooltip = translate("ToolOptions.TOOLTIP_DESCRIPTION[CustomRoadSnapFork.ToggleSnap]", "Straßen-Einrasten ein-/ausschalten");
+            const sliderTitle = translate("ToolOptions.TOOLTIP_TITLE[CustomRoadSnapFork.SnapAngle]", "Snap angle");
             const sliderDescription = translate(
-                "ToolOptions.TOOLTIP_DESCRIPTION[CustomRoadSnap.SnapAngle]",
+                "ToolOptions.TOOLTIP_DESCRIPTION[CustomRoadSnapFork.SnapAngle]",
                 "Angle between the snap directions used by the custom snap."
             );
 
             const onAngleChange = (value: number) => {
                 setAngle(value);
-                trigger("customRoadSnap", "setSnapAngle", value);
+                trigger("customRoadSnapFork", "setSnapAngle", value);
             };
 
             result?.props?.children?.push(
@@ -48,7 +48,7 @@ export const RoadSnapSection: ModuleRegistryExtend = (Component: any) => {
                     createElement(ToolButton, {
                         selected: snapEnabled,
                         tooltip: buttonTooltip,
-                        onSelect: () => trigger("customRoadSnap", "toggleSnap"),
+                        onSelect: () => trigger("customRoadSnapFork", "toggleSnap"),
                         src: "Media/Glyphs/Angle.svg",
                         focusKey: VanillaComponentResolver.instance.FOCUS_DISABLED,
                         className: VanillaComponentResolver.instance.toolButtonTheme.ToolButton,

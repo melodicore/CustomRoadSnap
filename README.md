@@ -1,8 +1,14 @@
-# CustomRoadSnap — Cities: Skylines II Mod
+# Custom Road Snap Fork — Cities: Skylines II Mod
 
-![Version](https://img.shields.io/badge/version-1.1-blue)
+![Version](https://img.shields.io/badge/release-not%20yet%20released-lightgrey)
 ![Game Version](https://img.shields.io/badge/game%20version-1.5.*-green)
-[![Paradox Mods](https://img.shields.io/badge/Paradox%20Mods-Download-orange)](https://mods.paradoxplaza.com/mods/141606/Windows)
+
+> **This is a fork.** Custom Road Snap Fork is based on
+> [CustomRoadSnap](https://github.com/Rias1944/CustomRoadSnap) by **Rias**
+> ([Rias1944](https://github.com/Rias1944)), the original author, who created the mod and
+> its snapping implementation. The original is also available on
+> [Paradox Mods](https://mods.paradoxplaza.com/mods/141606/Windows). See
+> [Attribution](#attribution) below.
 
 A mod for **Cities: Skylines II** that snaps roads to a **configurable angle** while the Net Tool is active.
 
@@ -19,6 +25,14 @@ potential save corruption or unexpected behavior.
 - Keyboard shortcut to toggle snapping on/off (configurable in mod settings)
 - Minimal performance impact — only active when the Net Tool is selected
 
+## Changes in this fork
+
+- The vanilla 90° snap button is the master switch for all angle snapping. The mod's own
+  button only switches between the vanilla 90° snap and the custom angle, so snapping can
+  now be turned off completely
+- Quick angle slider next to the toggle button in the road tool options
+- Builds on Linux (see [Building from Source](#building-from-source))
+
 ## Todo-List
 
 - [ ] Add Localization
@@ -26,17 +40,17 @@ potential save corruption or unexpected behavior.
 
 ## 📦 Installation
 
-### Option 1: Paradox Mods (Recommended)
-1. Subscribe to the mod on **[Paradox Mods](https://mods.paradoxplaza.com/mods/141606/Windows)**
-2. The mod will be automatically downloaded and installed
-3. Enable the mod in **Options → Mods** menu in-game
+**This fork has not been released yet.** There is no Paradox Mods page or release download
+for it, so for now the only way to use it is to [build it from source](#building-from-source)
+and copy the result to:
 
-### Option 2: Manual Installation (GitHub)
-1. Download the latest [`CustomRoadSnap-v1.1.zip`](https://github.com/Rias1944/CustomRoadSnap/releases/latest)
-2. Extract the ZIP file
-3. Copy the contents to:  
-   `%AppData%\..\LocalLow\Colossal Order\Cities Skylines II\Mods\CustomRoadSnap\`
-4. Enable the mod in **Options → Mods** menu in-game
+`%AppData%\..\LocalLow\Colossal Order\Cities Skylines II\Mods\CustomRoadSnapFork\`
+
+Then enable the mod in the **Options → Mods** menu in-game.
+
+The original mod on Paradox Mods does not include this fork's changes. It is a separate mod with its own
+mod ID, so both can be installed, but only run one of them at a time, as they patch the same
+road tool.
 
 ## Building from Source
 
@@ -56,8 +70,12 @@ npm install
 npm run build
 
 # Build C# project
-# Open CustomRoadSnap.slnx in Visual Studio and build
+# Open CustomRoadSnapFork.slnx in Visual Studio and build
 ```
+
+On Linux, set up the modding toolchain as described on the
+[CS2 modding wiki](https://cs2.paradoxwikis.com/Modding_Toolchain_on_Linux) and run
+`dotnet build -c Release`.
 
 ## How It Works
 
@@ -70,6 +88,14 @@ The mod uses **HarmonyX** to patch the game's road placement system:
 
 The UI button is injected into CS2's `MouseToolOptions` panel using the official CS2 modding `moduleRegistry.extend` pattern.
 
+## Attribution
+
+Custom Road Snap Fork is a fork of [CustomRoadSnap](https://github.com/Rias1944/CustomRoadSnap)
+by **Rias**. The original idea, the snapping implementation and the UI integration are the
+original author's work; this fork builds on them. Thank you!
+
+The fork is maintained by [MELOD](https://github.com/melodicore).
+
 ## License
 
-GNU GPLv3
+GNU GPLv3, the same license as the original project.

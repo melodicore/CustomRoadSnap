@@ -8,11 +8,11 @@ using Game.Tools;
 using HarmonyLib;
 using UnityEngine.InputSystem;
 
-namespace CustomRoadSnap
+namespace CustomRoadSnapFork
 {
     public class Mod : IMod
     {
-        public static ILog log = LogManager.GetLogger($"{nameof(CustomRoadSnap)}.{nameof(Mod)}").SetShowsErrorsInUI(false);
+        public static ILog log = LogManager.GetLogger($"{nameof(CustomRoadSnapFork)}.{nameof(Mod)}").SetShowsErrorsInUI(false);
         public static Setting m_Setting;
         public static ProxyAction m_ToggleAction;
         public static Mod instance;
@@ -34,14 +34,14 @@ namespace CustomRoadSnap
 
             m_Setting.RegisterKeyBindings();
 
-            _harmony = new Harmony("com.customroadsnap");
+            _harmony = new Harmony("com.customroadsnapfork");
             _harmony.PatchAll(typeof(Mod).Assembly);
 
             m_ToggleAction = m_Setting.GetAction(kToggleActionName);
             m_ToggleAction.shouldBeEnabled = true;
             m_ToggleAction.onInteraction += OnToggleSnap;
 
-            AssetDatabase.global.LoadSettings(nameof(CustomRoadSnap), m_Setting, new Setting(this));
+            AssetDatabase.global.LoadSettings(nameof(CustomRoadSnapFork), m_Setting, new Setting(this));
 
             // Pre-phase: runs BEFORE NetToolSystem (patches HitPosition, removes 90° snap flag)
             updateSystem.UpdateBefore<CustomRoadSnapPreSystem, NetToolSystem>(SystemUpdatePhase.ToolUpdate);
@@ -73,7 +73,7 @@ namespace CustomRoadSnap
         public void OnDispose()
         {
             log.Info(nameof(OnDispose));
-            _harmony?.UnpatchAll("com.customroadsnap");
+            _harmony?.UnpatchAll("com.customroadsnapfork");
             _harmony = null;
             if (m_ToggleAction != null)
                 m_ToggleAction.onInteraction -= OnToggleSnap;

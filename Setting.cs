@@ -6,9 +6,9 @@ using Game.Settings;
 using Game.UI;
 using System.Collections.Generic;
 
-namespace CustomRoadSnap
+namespace CustomRoadSnapFork
 {
-    [FileLocation(nameof(CustomRoadSnap))]
+    [FileLocation(nameof(CustomRoadSnapFork))]
     [SettingsUIGroupOrder(kSnapGroup, kKeybindingGroup)]
     [SettingsUIShowGroupName(kSnapGroup, kKeybindingGroup)]
     [SettingsUIKeyboardAction(Mod.kToggleActionName, ActionType.Button, usages: new string[] { Usages.kDefaultUsage }, interactions: new string[] { "Press" })]
@@ -63,7 +63,7 @@ namespace CustomRoadSnap
         {
             return new Dictionary<string, string>
             {
-                { m_Setting.GetSettingsLocaleID(),                              "Custom Road Snap" },
+                { m_Setting.GetSettingsLocaleID(),                              "Custom Road Snap Fork" },
                 { m_Setting.GetOptionTabLocaleID(Setting.kSection),             "Main" },
 
                 { m_Setting.GetOptionGroupLocaleID(Setting.kSnapGroup),         "Snap Settings" },
@@ -81,7 +81,7 @@ namespace CustomRoadSnap
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetBindings)), "Reset Key Bindings" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetBindings)),  "Resets all key bindings to their defaults." },
 
-                { m_Setting.GetBindingMapLocaleID(),                              "Custom Road Snap" },
+                { m_Setting.GetBindingMapLocaleID(),                              "Custom Road Snap Fork" },
                 { m_Setting.GetBindingKeyLocaleID(Mod.kToggleActionName),         "Toggle Snap key" },
             };
         }
