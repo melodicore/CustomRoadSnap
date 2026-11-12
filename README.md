@@ -1,7 +1,8 @@
 # Custom Road Snap Fork — Cities: Skylines II Mod
 
-![Version](https://img.shields.io/badge/release-not%20yet%20released-lightgrey)
+![Version](https://img.shields.io/badge/version-1.0-blue)
 ![Game Version](https://img.shields.io/badge/game%20version-1.6.*-green)
+[![Paradox Mods](https://img.shields.io/badge/Paradox%20Mods-Download-orange)](https://mods.paradoxplaza.com/mods/167273/Windows)
 
 > **This is a fork.** Custom Road Snap Fork is based on
 > [CustomRoadSnap](https://github.com/Rias1944/CustomRoadSnap) by **Rias**
@@ -40,13 +41,17 @@ potential save corruption or unexpected behavior.
 
 ## 📦 Installation
 
-**This fork has not been released yet.** There is no Paradox Mods page or release download
-for it, so for now the only way to use it is to [build it from source](#building-from-source)
-and copy the result to:
+### Option 1: Paradox Mods (Recommended)
+1. Subscribe to the mod on **[Paradox Mods](https://mods.paradoxplaza.com/mods/167273/Windows)**
+2. The mod will be automatically downloaded and installed
+3. Enable the mod in **Options → Mods** menu in-game
 
-`%AppData%\..\LocalLow\Colossal Order\Cities Skylines II\Mods\CustomRoadSnapFork\`
-
-Then enable the mod in the **Options → Mods** menu in-game.
+### Option 2: Manual Installation (GitHub)
+1. Download the latest zip from the [releases page](https://github.com/melodicore/CustomRoadSnap/releases)
+2. Extract the ZIP file
+3. Copy the contents to:  
+   `%AppData%\..\LocalLow\Colossal Order\Cities Skylines II\Mods\CustomRoadSnapFork\`
+4. Enable the mod in **Options → Mods** menu in-game
 
 The original mod on Paradox Mods does not include this fork's changes. It is a separate mod with its own
 mod ID, so both can be installed, but only run one of them at a time, as they patch the same
