@@ -15,7 +15,7 @@ potential save corruption or unexpected behavior.
 
 - Configure the snap angle (1–90°) via a **slider in mod settings**
 - Default: 30° (gives axes at 0°, 30°, 60°, 90°, … — ideal for hex-grid cities)
-- Toggle button in the **Tool Options** panel when the road tool is active
+- Toggle button in the **Tool Options** panel when the road tool is active: it switches the vanilla 90° snap over to your custom angle. The vanilla snap button stays the master switch, so turning it off disables all angle snapping
 - Keyboard shortcut to toggle snapping on/off (configurable in mod settings)
 - Minimal performance impact — only active when the Net Tool is selected
 

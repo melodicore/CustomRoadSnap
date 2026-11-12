@@ -44,6 +44,10 @@ namespace CustomRoadSnap
     // Shared state written by PostSystem, read by HarmonyPatch every frame.
     internal static class SnapState
     {
+        // True for the frame in which PreSystem stripped the vanilla 90-deg flag, i.e. the
+        // player has vanilla snapping switched ON and the mod's angle mode selected.
+        // PostSystem uses it to restore the flag and to know whether custom snap applies.
+        public static bool   CustomSnapActive;
         public static bool   HasAnchor;
         public static float  BaseAngle;
         public static float3 AnchorPos;
@@ -71,20 +75,28 @@ namespace CustomRoadSnap
 
         protected override void OnUpdate()
         {
+            // The vanilla 90-deg snap button is the master switch for ALL angle snapping.
+            // The mod only decides WHICH angle snap runs while that switch is on.
+            //   mod mode off                      -> untouched, vanilla behaviour
+            //   mod mode on  + vanilla snap on    -> custom angle snap (this system strips the flag)
+            //   mod mode on  + vanilla snap off   -> no angle snapping at all
+            SnapState.CustomSnapActive = false;
+
             if (!(Mod.m_Setting?.SnapEnabled ?? false))
-            {
-                // Restore vanilla 90-deg snap when mod is disabled
-                if ((m_NetToolSystem.selectedSnap & Snap.StraightDirection) == Snap.None)
-                    m_NetToolSystem.selectedSnap |= Snap.StraightDirection;
                 return;
-            }
 
             if (m_ToolSystem.activeTool != m_NetToolSystem)
                 return;
 
-            // Remove 90-deg snap flag so NetToolSystem does NOT apply 90-deg snap.
-            if ((m_NetToolSystem.selectedSnap & Snap.StraightDirection) != Snap.None)
-                m_NetToolSystem.selectedSnap &= ~Snap.StraightDirection;
+            var snap = m_NetToolSystem.selectedSnap;
+            if ((snap & Snap.StraightDirection) == Snap.None)
+                return; // player turned snapping off: do not interfere
+
+            // Hide the flag from NetToolSystem for this frame only so it does NOT apply
+            // the 90-deg snap. PostSystem puts it back, so the vanilla button always
+            // shows (and toggles) the player's real setting.
+            m_NetToolSystem.selectedSnap = snap & ~Snap.StraightDirection;
+            SnapState.CustomSnapActive = true;
         }
     }
 
@@ -95,7 +107,7 @@ namespace CustomRoadSnap
     //   1. Compute 120 deg snap from the CURRENT raw raycast (m_HitPosition).
     //   2. Write snapped position back to m_ControlPoints[last].
     //   3. Add GuideLine SnapLines through anchor position.
-    //   4. Restore StraightDirection for next frame base state.
+    //   4. Restore StraightDirection (the player's own vanilla snap setting).
     //   5. Fix NetCourse.m_Curve on Temp preview entities.
     // -------------------------------------------------------------------------
     public partial class CustomRoadSnapPostSystem : GameSystemBase
@@ -117,14 +129,14 @@ namespace CustomRoadSnap
 
         protected override void OnUpdate()
         {
-            if (!(Mod.m_Setting?.SnapEnabled ?? false))
-            {
-                SnapState.HasAnchor = false;
-                NetToolSystem_GetRaycastResult_Patch.Active = false;
-                return;
-            }
+            bool customActive = SnapState.CustomSnapActive;
+            SnapState.CustomSnapActive = false;
 
-            if (m_ToolSystem.activeTool != m_NetToolSystem)
+            // Give the flag back first, no matter what else happens this frame.
+            if (customActive)
+                m_NetToolSystem.selectedSnap |= Snap.StraightDirection;
+
+            if (!customActive || m_ToolSystem.activeTool != m_NetToolSystem)
             {
                 SnapState.HasAnchor = false;
                 NetToolSystem_GetRaycastResult_Patch.Active = false;

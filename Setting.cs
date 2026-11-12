@@ -70,7 +70,7 @@ namespace CustomRoadSnap
                 { m_Setting.GetOptionGroupLocaleID(Setting.kKeybindingGroup),   "Key Bindings" },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SnapEnabled)), "Enable Custom Snap" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SnapEnabled)),  "Snaps road direction to multiples of the configured snap angle." },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.SnapEnabled)),  "Replaces the vanilla 90° angle snap with the configured snap angle. The vanilla snap button still switches all angle snapping on and off." },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.SnapAngle)),   "Snap Angle" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.SnapAngle)),    "The angle increment for road snapping (in degrees). E.g. 30° gives axes at 0°, 30°, 60°, …" },
